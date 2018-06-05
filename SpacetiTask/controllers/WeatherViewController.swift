@@ -83,6 +83,7 @@ class WeatherViewController: UIViewController, MGLMapViewDelegate, CLLocationMan
     
     //MARK: - function
     
+    /// generate temperature annotation
     func generateTempreatureAnnotations() {
         if let annotations = viewMap.annotations {
             viewMap.removeAnnotations(annotations)
@@ -99,6 +100,7 @@ class WeatherViewController: UIViewController, MGLMapViewDelegate, CLLocationMan
         viewMap.addAnnotations(annotations)
     }
     
+    /// generate weather annotations
     func generateWeatherAnnotations() {
         viewMap.removeAnnotations(annotations)
         
@@ -113,6 +115,9 @@ class WeatherViewController: UIViewController, MGLMapViewDelegate, CLLocationMan
         viewMap.addAnnotations(annotations)
     }
     
+    /// Load annotaion for map
+    ///
+    /// - Parameter index: index
     func loadAnnotations( index: Int) {
         switch index {
         case 0:
@@ -128,6 +133,9 @@ class WeatherViewController: UIViewController, MGLMapViewDelegate, CLLocationMan
     
     //MARK: - actions
     
+    /// Action of selecton in Segment
+    ///
+    /// - Parameter sender: segment control
     @IBAction func touchSwitch(_ sender: UISegmentedControl) {
         loadAnnotations(index: sender.selectedSegmentIndex)
     }

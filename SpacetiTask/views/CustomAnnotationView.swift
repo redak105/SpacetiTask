@@ -9,6 +9,7 @@
 import UIKit
 import Mapbox
 
+/// Custom annotation view
 class CustomAnnotationView: MGLAnnotationView {
     
     var label: UILabel = UILabel()
@@ -30,11 +31,15 @@ class CustomAnnotationView: MGLAnnotationView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
+    /// Set title for annotation
+    ///
+    /// - Parameter title: label title
     func setTitle(title: String) {
         self.label.text = title
     }
     
+    /// created custom view fo Label
     func addCustomView() {
         label.text = title
         label.textAlignment = .center
@@ -48,12 +53,9 @@ class CustomAnnotationView: MGLAnnotationView {
         let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[label]", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
         self.addConstraints(horizontalConstraints)
         self.addConstraints(verticalConstraints)
-        
     }
-    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         //        super.setSelected(selected, animated: animated)
-    }
-    
+    }    
 }
