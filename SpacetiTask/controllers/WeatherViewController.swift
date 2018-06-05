@@ -17,6 +17,8 @@ class WeatherViewController: UIViewController, MGLMapViewDelegate, CLLocationMan
     let locationManager = CLLocationManager()
     var reports:[Report] = []
     var annotations:[MGLPointAnnotation] = []
+    var timer = Timer()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +40,8 @@ class WeatherViewController: UIViewController, MGLMapViewDelegate, CLLocationMan
         if let location = locationManager.location {
             mapView.setCenter(location.coordinate, zoomLevel: 12, animated: false)
             
-            DataManager.getReport(lat:location.coordinate.latitude, lon: location.coordinate.longitude, completion: { (result) in
-                if let reports = result {
-                    self.reports = reports
-                    self.loadAnnotations(index: self.switchWeather.selectedSegmentIndex)
-                }
-            })
+            self.updateReport()
+            timer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(updateReport), userInfo: nil, repeats: true)
         }
     }
     
@@ -128,6 +126,17 @@ class WeatherViewController: UIViewController, MGLMapViewDelegate, CLLocationMan
             break;
         default:
             break;
+        }
+    }
+    
+    @objc func updateReport() {
+        if let location = locationManager.location {
+            DataManager.getReport(lat:location.coordinate.latitude, lon: location.coordinate.longitude, completion: { (result) in
+                if let reports = result {
+                    self.reports = reports
+                    self.loadAnnotations(index: self.switchWeather.selectedSegmentIndex)
+                }
+            })
         }
     }
     
